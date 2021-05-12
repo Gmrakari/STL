@@ -75,7 +75,7 @@ char * __default_alloc_template<threads,inst>::chunk_alloc(size_t size,int& nobj
 			end_free = 0;		//如果出现意外,到处都没内存可用
 			//调用第一级配置器,看看out-of-memory机制能否尽点力
 			start_free = (char *)malloc_alloc::allocate(bytes_to_get);
-			//这会导致跑出异常(exception)，或内存不足的情况获得改善
+			//这会导致抛出异常(exception)，或内存不足的情况获得改善
 		}
 		heap_size += bytes_to_get;
 		end_free = start_free + bytes_to_get;
