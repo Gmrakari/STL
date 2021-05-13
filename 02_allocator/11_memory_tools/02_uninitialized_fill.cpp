@@ -20,3 +20,30 @@ void uninitialized_fill(ForwardIterator first,ForwardIterator last,const T& x);
  */
 
 
+template <class ForwardIterator,class T>
+void uninitialized_fill(ForwardIterator first,ForwardIterator last,const T& x)
+{
+	__uninitialized_fill(first,last,x,value_type(first));
+}
+
+template <class ForwardIterator,class T>
+inline void __uninitialized_fill(ForwardIterator first,ForwardIterator last,const T& x,T1*)
+{
+	typedef typename __type_traits<T1>::is_POD_type is_POD;
+	__uninitialized_fill_aux(first,last,is_POD());
+}
+
+template <class ForwardIterator,class T>
+inline void __uninitialized_fill_aux(ForwardIterator first,ForwardIterator last,const T& x,__true_type)
+{
+	fill(first,last,x);
+}
+
+
+template <class ForwardIterator,class T>
+inline void __uninitialized_fill_aux(ForwardIterator first,ForwardIterator last,const T& x,__false_type)
+{
+	ForwardIterator cur = first;
+	for(; cur != last;++cur)
+		construct(&*cur,x);
+}
