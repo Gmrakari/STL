@@ -1,0 +1,9 @@
+
+
+/*
+ * STL定义有5个全局函数,作用于未初始化空间上
+ * include:
+ * construct(),destroy(),
+ * uninitialized_copy(),uninitialized_fill(),uninitialized_fill_n(),分别对应copy(),fill(),fill_n()
+ */
+
