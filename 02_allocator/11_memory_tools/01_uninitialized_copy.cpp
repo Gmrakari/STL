@@ -23,3 +23,53 @@
  * 要么"当有任何一个copy constructor 失败时" 不构造任何东西
  */
 
+
+template <class InputIterator,class ForwardIterator>
+inline ForwardIterator uninitialized_copy(InputIterator first,InputIterator last,ForwardIterator result)
+{
+	return __uninitialized_copy(first,last,result,value_type(result));
+}
+
+
+template <class InputIterator,class ForwardIterator,class T>
+inline ForwardIterator __uninitialized_copy(InputIterator first,InputIterator last,ForwardIterator result,T*)
+{
+	
+	typedef typename __type_traits<T1>::is_POD_type is_POD;
+	return __uninitialized_copy_aux(first,last,result,is_POD());
+}
+
+template <class InputIterator,class ForwardIterator>
+inline ForwardIterator __uninitialized_copy_aux(InputIterator first,InputIterator last,ForwardIterator result,__true_type)
+{
+	return copy(first,last,result);
+}
+
+template <class InputIterator,class ForwardIterator>
+ForwardIterator __uninitialized_copy_aux(InputIterator first,InputIterator last,ForwardIterator result,__false_type)
+{
+	ForwardIterator cur = result;
+	for(; first != last;++first,++cur)
+		construct(&*cur,*first);		//必须一个一个元素地构造,无法批量进行
+	return cur;
+}
+
+/*
+ * 针对char *和wchar_t *两种型别，可以采用最具有效率地做法memmove(直接移动内存内容)来执行复制行为
+ * SGI得以为这两种型别设计一份特化版本
+ */
+
+//const char* version
+inline char* uninitialized_copy(const char* first,const char* last,char* result)
+{
+	memmove(result,first,last - first);
+	return result + (last - first);
+}
+
+//const wchar_t* version
+
+inline wchar_t* uninitialized_copy(const wchar_t* first,const wchar_t* last,wchar_t* result)
+{
+	memmove(result,first,sizeof(wchar_t) * (last - first));
+	return result + (last - first);
+}
