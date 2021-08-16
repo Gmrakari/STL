@@ -95,9 +95,9 @@ class hash_multiset {
 			return rep.elems_in_buckets(n);
 		}
 
-		template <class Value, class HashFcn, class EqualKey, class Alloc>
-			inline bool operator==(const hash_multiset<Value, HashFcn, EqualKey, Alloc>& hs1, 
-					const hash_multiset<Value, HashFcn, EqualKey, Alloc>& hs2) {
+		template <class Val, class HashFcn, class EqualKey, class Alloc>
+			inline bool operator==(const hash_multiset<Val, HashFcn, EqualKey, Alloc>& hs1, 
+					const hash_multiset<Val, HashFcn, EqualKey, Alloc>& hs2) {
 				return hs1.rep == hs2.rep;
 			}
 }
