@@ -104,7 +104,7 @@ class hash_map {
 			return rep.elems_in_buckets(n);
 		}
 
-		template <class Value, class HashFcn, class EqualKey, class Alloc>
+		template <class Key, class T, class EqualKey, class Alloc>
 			inline bool operator==(const hash_map<Key, T, HashFcn, EqualKey, Alloc>& hm1,
 					const hash_map<Key, T, HashFcn, EqualKey, Alloc>& hm2) {
 				return hm1.rep == hm2.rep;
