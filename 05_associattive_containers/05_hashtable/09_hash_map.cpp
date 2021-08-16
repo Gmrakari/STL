@@ -44,13 +44,13 @@ class hash_map {
 		//以下 插入操作全部使用insert_unique(),不允许键值重复
 		template <class InputIterator>
 		hash_map(InputIterator f, InputIterator l) 
-			: rep(100, hasher(), key_equal()) { rep.insert_unique(f, 1); }
+			: rep(100, hasher(), key_equal()) { rep.insert_unique(f, l); }
 		template <class InputIterator>
 		hash_map(InputIterator f, InputIterator l, size_type n)
-			: rep(n, hasher(), key_equal()) { rep.insert_unique(f, 1) }
+			: rep(n, hasher(), key_equal()) { rep.insert_unique(f, l) }
 		template <class InputIterator>
 		hash_map(InputIterator f, InputIterator l, size_type n, const hasher& hf)
-			: rep(n, hf, key_equal()) { rep.insert_unique(f, 1); }
+			: rep(n, hf, key_equal()) { rep.insert_unique(f, l); }
 		template <class InputIterator>
 		hash_map(InputIterator f, InputIterator l, size_type n, const hasher& hf, const key_equal& eql)
 			: rep(n, hf, eqal) { rep.insert_unique(f, l); }
