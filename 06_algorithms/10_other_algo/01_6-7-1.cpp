@@ -186,7 +186,7 @@ int main() {
 	cout << *search_n(iv.begin(), iv.end(), 3, 8, less<int>()) << endl;//7
 
 	//将两个区间内的元素互换。第二区间的元素个数不应小于第一区间的元素个数
-	cout << "将两个区间内的元素互换。第二区间的元素个数不应小于第一区间的元素个数 iv:" ;
+	cout << "swap_range:将两个区间内的元素互换。第二区间的元素个数不应小于第一区间的元素个数 iv:" ;
 	swap_ranges(iv4.begin(), iv4.end(), iv.begin());
 	for_each(iv.begin(), iv.end(), display<int>()); 
 	cout << endl;
