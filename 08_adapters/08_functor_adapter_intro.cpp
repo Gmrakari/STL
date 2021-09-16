@@ -21,5 +21,43 @@
  * 整个凑合成为一个表达式(express),可与任何"可就二手表达式为参数"之算法搭配
  */
 
+/*
+ * update:2021-09-16 10:55
+ * function adapers 实现细节
+ *
+ * 容器是以class templates完成，算法是以funciton templates完成，仿函数是一种将operator()重载的class template
+ * 迭代器则是一种将operator++和operator*等指针习惯常行为重载的class template
+ *
+ * container adapters内藏了一个container member一样，或是像reverse iterator(adapters)内藏了一个iterator member一样
+ * 或是像stream iterator(adapters)内藏了一个pointer to stream一样，或是像insert iterator(adapters)内藏了一个
+ * pointer to container(并因而得以取其iterator)一样，每一个function adapters也内藏了一个member object,其性别等同于它所
+ * 要陪接的对象(那个对象当然是一个"可配接的仿函数",adaptable functor)
+ * 当function adapter有了完全属于自己的一份修饰对象(的副本)在收，它就成了该修饰对象(的副本)的主人，也就有资格调用该
+ * 修饰对象(一个仿函数)，并在参数和返回值上面动手脚了
+ *
+ * 见书P450
+ *
+ * count_if(iv.begin(), iv.end(), bin2nd(less<int>()< 12));
+ * bin2nd会产生一个binder2nd<Operation>(...);对象，此将传给count_if()成为其pred参数
+ *
+ *
+ */
+
+template <class Operation>
+class binder2nd : public unary_function<...> {
+protected:
+	Operation op;
+	typename Operation::second_argument_type value;
+
+public:
+	binder2nd(const Operation& x, const typename Operation::second_argument_type& y) 
+		: op(x), value(y) {}
+	typename Operation::result_type operator()(const typename Operation::first_argument_type& x) const {
+		return op(x, value);
+	}
+};
+
+
+
 
 
