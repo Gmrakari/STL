@@ -70,3 +70,6 @@ int main() {
  * 一定要以适配器mem_fun修饰member function,才能被算法for_each接受。
  * 虽然多态(polymorphism)可以对pointer或reference起作用，但很可惜的是，STL容器只支持
  * "实值语意"(value semantic)，不支持"引用语意"(reference semantics)
+ */
+
+
